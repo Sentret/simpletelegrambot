@@ -36,7 +36,7 @@ def translate(word):
 
     response = requests.get('https://translate.yandex.net/api/v1.5/tr.json/translate',params)
     detection = response.json()
-    return detection
+    return detection['text']
 
 
 def send_answer(chatid, message):
@@ -47,31 +47,6 @@ def send_answer(chatid, message):
 
     print((chatid,message))
     requests.get('https://api.telegram.org/bot%s/sendMessage'%TELEGRAM_API_TOKEN, answer_args)
-
-
-
-
-
-
-
-
-
-
-
-
-# detect_response = requests.get('https://api.telegram.org/bot%s/Update'%TELEGRAM_API_TOKEN)
-# print(detect_response.text)
-
-# answer_args = {
-#   'chat_id':'341288157',
-#   'text':'hi'
-# }
-# requests.get('https://api.telegram.org/bot%s/sendMessage'%TELEGRAM_API_TOKEN,answer_args)
-# detection = json.loads(detect_response.text)
-
-
-# print(detection)
-
 
 
 class Application(tornado.web.Application):
