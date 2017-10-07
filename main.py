@@ -39,6 +39,15 @@ def translate(word):
     return detection
 
 
+def send_answer(chatid, message):
+    answer_args = {
+  'chat_id':chatid,
+  'text':translate(message)
+}
+
+    requests.get('https://api.telegram.org/bot%s/sendMessage'%TELEGRAM_API_TOKEN, answer_args)
+
+
 
 
 
@@ -87,8 +96,13 @@ class TelegramHandler(tornado.web.RequestHandler):
     @gen.coroutine
     def post(self):
         
-        # response =  translate(word) 
-        print(self.request.body)     
+        # response =  translate(word)
+        req = json.loads( self.request.body.decode("utf-8"))
+        message = req['message']['text']
+        chatid = req['message']['chat']['id']
+
+
+        send_answer(chatid, message)
         self.write('telegram')
         
         
