@@ -8,6 +8,7 @@ import tornado.options
 import tornado.web
 from tornado import gen
 import os
+
 TELEGRAM_API_TOKEN = '477664984:AAE3DMVARlsk-L5loYPNG4J6Jcm8D2EYsvI'
 YANDEX_TRANSLATE_API_TOKEN ='trnsl.1.1.20171007T151418Z.c518155b55576f48.b05b24f6c5542b4f63acc2857d3f3bf44202cd62'
 
@@ -26,13 +27,14 @@ def detect_language(word):
 
 
 def translate(word):
+
     lang = detect_language(word)
 
     params = {
         'key':YANDEX_TRANSLATE_API_TOKEN,
         'text':word,
         'lang':lang+'-ru',
-     }
+        }
 
     response = requests.get('https://translate.yandex.net/api/v1.5/tr.json/translate',params)
     detection = response.json()
@@ -40,31 +42,25 @@ def translate(word):
 
 
 def send_answer(chatid, message):
-    answer_args = {
-  'chat_id':str(chatid),
-  'text':translate(message)
-}
 
-    print((chatid,message))
+    answer_args = {
+        'chat_id':str(chatid),
+        'text':translate(message)
+        }
+
+    
     requests.get('https://api.telegram.org/bot%s/sendMessage'%TELEGRAM_API_TOKEN, answer_args)
 
 
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
-            (r"/", ClientHandler),
+            
             (r'/telegram/'+TELEGRAM_API_TOKEN, TelegramHandler)
         ]
         tornado.web.Application.__init__(self, handlers)
 
 
-class ClientHandler(tornado.web.RequestHandler):
-
-    @gen.coroutine
-    def get(self):
-        
-        # response =  translate(word)      
-        self.write('hello')
 
 
 class TelegramHandler(tornado.web.RequestHandler):
@@ -72,12 +68,10 @@ class TelegramHandler(tornado.web.RequestHandler):
     @gen.coroutine
     def post(self):
         
-        # response =  translate(word)
-        req = json.loads( self.request.body.decode("utf-8"))
-        
-        chatid = req['message']['chat']['id']
+
+        req     = json.loads( self.request.body.decode("utf-8"))        
+        chatid  = req['message']['chat']['id']
         message = req['message']['text']
-        print(req)
 
         send_answer(chatid, message)
         
