@@ -45,6 +45,7 @@ def send_answer(chatid, message):
   'text':translate(message)
 }
 
+    print((chatid,message))
     requests.get('https://api.telegram.org/bot%s/sendMessage'%TELEGRAM_API_TOKEN, answer_args)
 
 
