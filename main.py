@@ -105,7 +105,7 @@ class TelegramHandler(tornado.web.RequestHandler):
 
 
         send_answer(chatid, message)
-        self.write('telegram')
+        
         
         
 def main():
