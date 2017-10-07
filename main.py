@@ -68,6 +68,7 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", ClientHandler),
+            (r'/telegram/'+TELEGRAM_API_TOKEN, TelegramHandler)
         ]
         tornado.web.Application.__init__(self, handlers)
 
@@ -80,6 +81,14 @@ class ClientHandler(tornado.web.RequestHandler):
         # response =  translate(word)      
         self.write('hello')
 
+
+class TelegramHandler(tornado.web.RequestHandler):
+
+    @gen.coroutine
+    def post(self):
+        
+        # response =  translate(word)      
+        self.write(self.request.arguments["post"])
         
         
 def main():
