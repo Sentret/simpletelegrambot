@@ -1,6 +1,5 @@
 import requests
 import json
-import asyncio
 import tornado
 import tornado.httpserver
 import tornado.ioloop
@@ -9,8 +8,8 @@ import tornado.web
 from tornado import gen
 import os
 
-TELEGRAM_API_TOKEN = '477664984:AAE3DMVARlsk-L5loYPNG4J6Jcm8D2EYsvI'
-YANDEX_TRANSLATE_API_TOKEN ='trnsl.1.1.20171007T151418Z.c518155b55576f48.b05b24f6c5542b4f63acc2857d3f3bf44202cd62'
+TELEGRAM_API_TOKEN = ''
+YANDEX_TRANSLATE_API_TOKEN =''
 
 
 def detect_language(word):
