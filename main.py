@@ -46,8 +46,7 @@ def send_answer(chatid, message):
         'chat_id':str(chatid),
         'text':translate(message)
         }
-
-    
+   
     requests.get('https://api.telegram.org/bot%s/sendMessage'%TELEGRAM_API_TOKEN, answer_args)
 
 
@@ -60,14 +59,10 @@ class Application(tornado.web.Application):
         tornado.web.Application.__init__(self, handlers)
 
 
-
-
 class TelegramHandler(tornado.web.RequestHandler):
 
     @gen.coroutine
     def post(self):
-        
-
         req     = json.loads( self.request.body.decode("utf-8"))        
         chatid  = req['message']['chat']['id']
         message = req['message']['text']
