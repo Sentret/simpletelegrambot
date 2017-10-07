@@ -84,7 +84,7 @@ class ClientHandler(tornado.web.RequestHandler):
         
 def main():
     http_server = tornado.httpserver.HTTPServer(Application())
-    PORT = 5000
+    PORT = os.environ.get('PORT', 5000)
     print("serving at port", PORT)
     http_server.listen(PORT)
     tornado.ioloop.IOLoop.instance().start()
