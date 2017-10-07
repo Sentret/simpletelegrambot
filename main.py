@@ -41,7 +41,7 @@ def translate(word):
 
 def send_answer(chatid, message):
     answer_args = {
-  'chat_id':chatid,
+  'chat_id':str(chatid),
   'text':translate(message)
 }
 
@@ -98,8 +98,9 @@ class TelegramHandler(tornado.web.RequestHandler):
         
         # response =  translate(word)
         req = json.loads( self.request.body.decode("utf-8"))
-        message = req['message']['text']
+        
         chatid = req['message']['chat']['id']
+        message = req['message']['text']
 
 
         send_answer(chatid, message)
