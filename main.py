@@ -88,7 +88,7 @@ class TelegramHandler(tornado.web.RequestHandler):
     def post(self):
         
         # response =  translate(word) 
-        print('telegram')     
+        print(self.request.body)     
         self.write('telegram')
         
         
