@@ -67,7 +67,7 @@ def translate(word):
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
-            (r"/(\w*)", ClientHandler),
+            (r"/", ClientHandler),
         ]
         tornado.web.Application.__init__(self, handlers)
 
@@ -75,10 +75,10 @@ class Application(tornado.web.Application):
 class ClientHandler(tornado.web.RequestHandler):
 
     @gen.coroutine
-    def get(self, word):
+    def get(self):
         
-        response =  translate(word)      
-        self.write(response['text'][0])
+        # response =  translate(word)      
+        self.write('hello')
 
         
         
