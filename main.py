@@ -102,7 +102,7 @@ class TelegramHandler(tornado.web.RequestHandler):
         
         chatid = req['message']['chat']['id']
         message = req['message']['text']
-
+        print(req)
 
         send_answer(chatid, message)
         
